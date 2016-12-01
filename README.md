@@ -21,11 +21,13 @@ An interface for the administrator to easily change application settings. Uses L
 $ composer require backpack/settings
 ```
 
-2) Add the service provider to your config/app.php file:
+2) Add the service provider and facade to your config/app.php file:
 ```php
 Backpack\Settings\SettingsServiceProvider::class,
 ```
-
+```php
+'Settings' => Backpack\Settings\app\Facades\SettingsFacade::class,
+```
 3) Run the migration and add some example settings:
 ```bash
 $ php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
@@ -48,7 +50,7 @@ Add it to the menu or access it by its route: **application/admin/setting**
 Use it like you would any config value in a virtual settings.php file. Except the values are stored in the database and fetched on boot, instead of being stored in a file.
 
 ``` php
-Config::get('settings.contact_email')
+Settings::get('contact_email')
 ```
 
 ### Add new settings

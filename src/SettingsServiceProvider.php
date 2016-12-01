@@ -4,6 +4,7 @@ namespace Backpack\Settings;
 
 use Backpack\Settings\app\Models\Setting as Setting;
 use Config;
+use Illuminate\Config\Repository;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -25,18 +26,6 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // only use the Settings package if the Settings table is present in the database
-        if (count(Schema::getColumnListing('settings'))) {
-            // get all settings from the database
-            $settings = Setting::all();
-
-            // bind all settings to the Laravel config, so you can call them like
-            // Config::get('settings.contact_email')
-            foreach ($settings as $key => $setting) {
-                Config::set('settings.'.$setting->key, $setting->value);
-            }
-        }
-
         // publish the migrations and seeds
         $this->publishes([__DIR__.'/database/migrations/' => database_path('migrations')], 'migrations');
         $this->publishes([__DIR__.'/database/seeds/' => database_path('seeds')], 'seeds');
@@ -51,14 +40,21 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function setupRoutes(Router $router)
     {
-        $router->group(['namespace' => 'Backpack\Settings\app\Http\Controllers'], function ($router) {
-            // Admin Interface Routes
-            Route::group(['prefix'   => config('backpack.base.route_prefix', 'admin'),
-                        'middleware' => ['web', 'admin'], ], function () {
-                            // Settings
-                            Route::resource('setting', 'SettingCrudController');
-                        });
-        });
+        $router->group(
+            ['namespace' => 'Backpack\Settings\app\Http\Controllers'],
+            function ($router) {
+                // Admin Interface Routes
+                Route::group(
+                    [
+                        'prefix' => config('backpack.base.route_prefix', 'admin'),
+                        'middleware' => ['web', 'admin'],
+                    ],
+                    function () {
+                        Route::resource('setting', 'SettingCrudController');
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -68,19 +64,18 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerSettings();
         $this->setupRoutes($this->app->router);
+        $this->app->singleton('settings', function () {
+            $store = [];
+            if (count(Schema::getColumnListing('settings'))) {
+                // get all settings from the database
+                $settings = Setting::all();
+                foreach ($settings as $setting) {
+                    $store[$setting->key] = $setting->value;
+                }
+            }
 
-        // use this if your package has a config file
-        // config([
-        //         'config/Settings.php',
-        // ]);
-    }
-
-    private function registerSettings()
-    {
-        $this->app->bind('settings', function ($app) {
-            return new Settings($app);
+            return new Repository($store);
         });
     }
 }
