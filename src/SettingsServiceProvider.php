@@ -44,7 +44,7 @@ class SettingsServiceProvider extends ServiceProvider
             }
         }
         // publish the migrations and seeds
-        $this->publishes([__DIR__.'/database/migrations/' => database_path('migrations')], 'migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations/');
         $this->publishes([__DIR__.'/database/seeds/' => database_path('seeds')], 'seeds');
 
         // publish translation files
