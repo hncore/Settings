@@ -10,7 +10,7 @@ use Intervention\Image\Facades\Image;
 use Prologue\Alerts\Facades\Alert;
 
 /**
- * Class Setting
+ * Class Setting.
  */
 class Setting extends Model
 {
@@ -39,6 +39,7 @@ class Setting extends Model
             }
         });
     }
+
     /**
      * set field json to database.
      *
@@ -47,23 +48,27 @@ class Setting extends Model
     public function setFieldAttribute($field)
     {
         $fieldJson = [];
-        $fieldJson['name']  = "value";
-        $fieldJson['label'] = "Value";
-        $fieldJson['type']  = $field;
+        $fieldJson['name'] = 'value';
+        $fieldJson['label'] = 'Value';
+        $fieldJson['type'] = $field;
 
         $this->attributes['field'] = json_encode($fieldJson);
     }
+
     /**
      * get the correct type value for select2_from_array.
      *
      * @param $field
+     *
      * @return string
      */
     public function getFieldAttribute($field)
     {
         $fieldDecoded = json_decode($field, true);
+
         return $fieldDecoded['type'];
     }
+
     /**
      * set the correct value and check if image field.
      *
@@ -108,6 +113,7 @@ class Setting extends Model
                     if (!is_null($image)) {
                         // 2. Generate a filename.
                         $filename = md5($value.time()).'.'.$extension;
+
                         try {
                             // 3. Store the image on disk.
                             Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
@@ -120,7 +126,6 @@ class Setting extends Model
                             $this->attributes[$attribute_name] = null;
                         }
                     }
-
                 }
                 break;
             default:
@@ -128,6 +133,7 @@ class Setting extends Model
                 break;
         }
     }
+
     /**
      * get the correct value and check fields types
      * and return the correct tags.

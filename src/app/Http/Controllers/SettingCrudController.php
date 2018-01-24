@@ -43,12 +43,12 @@ class SettingCrudController extends CrudController
             [
                 'name'  => 'key',
                 'label' => trans('backpack::settings.key'),
-                'type'  => 'text'
+                'type'  => 'text',
             ],
             [
                 'name'  => 'description',
                 'label' => trans('backpack::settings.description'),
-                'type'  => 'text'
+                'type'  => 'text',
             ],
             [ // select_from_array
                 'name'    => 'field',
@@ -69,7 +69,7 @@ class SettingCrudController extends CrudController
             [
                 'name'  => 'active',
                 'label' => trans('backpack::settings.active'),
-                'type'  => 'checkbox'
+                'type'  => 'checkbox',
             ]
         ]);
     }
@@ -140,7 +140,7 @@ class SettingCrudController extends CrudController
      * get the correct field json value to add the correct field to edit form.
      *
      * @param int $id
-     * @param boolean $isImage
+     * @param bool $isImage
      * @return array
      */
     protected function getFieldJsonValue($id, $isImage = true)
@@ -151,20 +151,20 @@ class SettingCrudController extends CrudController
 
         if ($isImage == false) {
 
-            $fieldJson['name']  = "value";
-            $fieldJson['label'] = "Value";
-            $fieldJson['type']  = $fieldValue;
+            $fieldJson['name'] = 'value';
+            $fieldJson['label'] = 'Value';
+            $fieldJson['type'] = $fieldValue;
 
             return $fieldJson;
         } else {
 
-            $fieldJson['name']          = "value";
-            $fieldJson['label']         = "Value";
-            $fieldJson['type']          = $fieldValue;
-            $fieldJson['upload']        = config('backpack.settings.image_upload_enabled');
-            $fieldJson['crop']          = config('backpack.settings.image_crop_enabled');
-            $fieldJson['aspect_ratio']  = config('backpack.settings.image_aspect_ratio');
-            $fieldJson['prefix']        = config('backpack.settings.image_prefix');
+            $fieldJson['name'] = 'value';
+            $fieldJson['label'] = 'Value';
+            $fieldJson['type'] = $fieldValue;
+            $fieldJson['upload'] = config('backpack.settings.image_upload_enabled');
+            $fieldJson['crop'] = config('backpack.settings.image_crop_enabled');
+            $fieldJson['aspect_ratio'] = config('backpack.settings.image_aspect_ratio');
+            $fieldJson['prefix'] = config('backpack.settings.image_prefix');
             return $fieldJson;
         }
 
@@ -173,6 +173,7 @@ class SettingCrudController extends CrudController
      * get the correct field type.
      *
      * @param int $id
+     *
      * @return string
      */
     protected function getFieldType($id)
@@ -183,6 +184,7 @@ class SettingCrudController extends CrudController
      * get the correct field type.
      *
      * @param int $id
+     *
      * @return bool
      */
     protected function isImageField($id)

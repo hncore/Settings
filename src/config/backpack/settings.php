@@ -11,4 +11,5 @@ return [
     'image_crop_enabled'    => true, // set to true to allow cropping, false to disable
     'image_aspect_ratio'    => 1, // ommit or set to 0 to allow any aspect ratio
     'image_prefix'          => 'uploads/',  // in case you only store the filename in the database, this text will be prepended to the database value
+
 ];
