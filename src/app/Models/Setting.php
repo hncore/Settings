@@ -177,6 +177,7 @@ class Setting extends Model
                     // if false return danger label with NO string
                     $html = '<span class="label label-danger">NO</span>';
                 }
+
                 return $html;
                 break;
             case 'image':

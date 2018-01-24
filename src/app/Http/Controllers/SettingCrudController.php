@@ -70,7 +70,7 @@ class SettingCrudController extends CrudController
                 'name'  => 'active',
                 'label' => trans('backpack::settings.active'),
                 'type'  => 'checkbox',
-            ]
+            ],
         ]);
     }
 
@@ -139,8 +139,9 @@ class SettingCrudController extends CrudController
     /**
      * get the correct field json value to add the correct field to edit form.
      *
-     * @param int $id
+     * @param int  $id
      * @param bool $isImage
+     *
      * @return array
      */
     protected function getFieldJsonValue($id, $isImage = true)
@@ -150,14 +151,12 @@ class SettingCrudController extends CrudController
         $fieldJson = [];
 
         if ($isImage == false) {
-
             $fieldJson['name'] = 'value';
             $fieldJson['label'] = 'Value';
             $fieldJson['type'] = $fieldValue;
 
             return $fieldJson;
         } else {
-
             $fieldJson['name'] = 'value';
             $fieldJson['label'] = 'Value';
             $fieldJson['type'] = $fieldValue;
@@ -165,10 +164,11 @@ class SettingCrudController extends CrudController
             $fieldJson['crop'] = config('backpack.settings.image_crop_enabled');
             $fieldJson['aspect_ratio'] = config('backpack.settings.image_aspect_ratio');
             $fieldJson['prefix'] = config('backpack.settings.image_prefix');
+
             return $fieldJson;
         }
-
     }
+
     /**
      * get the correct field type.
      *
@@ -180,6 +180,7 @@ class SettingCrudController extends CrudController
     {
         return $this->crud->getEntry($id)->field;
     }
+
     /**
      * get the correct field type.
      *
