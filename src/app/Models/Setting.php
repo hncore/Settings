@@ -28,13 +28,11 @@ class Setting extends Model
     {
         parent::boot();
         static::deleting(function($obj) {
-            // 1. decode field object
-            $fieldDecoded = json_decode($obj->field, true);
-            // 2. get field type
-            $type = $fieldDecoded['type'];
-            // 3. check if it's image
+            // 1. get field type
+            $type = $obj->field;
+            // 2. check if it's image
             if ($type == "image") {
-                // 4. delete from disk
+                // 3. delete from disk
                 if (!Storage::disk(config('backpack.settings.images_disk_name'))->delete($obj->value)) {
                     // filed to delete image file
                     Alert::error(trans('backpack::settings.delete_image_file_not_message'))->flash();
