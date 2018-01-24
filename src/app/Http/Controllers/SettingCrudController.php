@@ -24,9 +24,9 @@ class SettingCrudController extends CrudController
                 'label' => trans('backpack::settings.key'),
             ],
             [
-                'name'  => 'value',
-                'label' => trans('backpack::settings.value'),
-                'type' => 'model_function',
+                'name'          => 'value',
+                'label'         => trans('backpack::settings.value'),
+                'type'          => 'model_function',
                 'function_name' => 'getValueFunction',
             ],
             [
@@ -43,33 +43,33 @@ class SettingCrudController extends CrudController
             [
                 'name'  => 'key',
                 'label' => trans('backpack::settings.key'),
-                'type' => 'text'
+                'type'  => 'text'
             ],
             [
                 'name'  => 'description',
                 'label' => trans('backpack::settings.description'),
-                'type' => 'text'
+                'type'  => 'text'
             ],
             [ // select_from_array
-                'name' => 'field',
-                'label' => trans('backpack::settings.select_field'),
-                'type' => 'select2_from_array',
+                'name'    => 'field',
+                'label'   => trans('backpack::settings.select_field'),
+                'type'    => 'select2_from_array',
                 'options' => [
-                    'text' => 'Text',
-                    'email' => 'Email',
-                    'checkbox' => 'Checkbox',
-                    'number' => 'Number',
-                    'url' => 'URL',
-                    'image' => 'Image',
-                    'password' => 'Password',
-                    'icon_picker' => 'Icon Picker',
+                    'text'          => 'Text',
+                    'email'         => 'Email',
+                    'checkbox'      => 'Checkbox',
+                    'number'        => 'Number',
+                    'url'           => 'URL',
+                    'image'         => 'Image',
+                    'password'      => 'Password',
+                    'icon_picker'   => 'Icon Picker',
                 ],
                 'allows_null' => false,
             ],
             [
                 'name'  => 'active',
                 'label' => trans('backpack::settings.active'),
-                'type' => 'checkbox'
+                'type'  => 'checkbox'
             ]
         ]);
     }
@@ -137,50 +137,56 @@ class SettingCrudController extends CrudController
     }
 
     /**
-     * get the correct field json value to add the correct field to edit form
+     * get the correct field json value to add the correct field to edit form.
+     *
      * @param int $id
      * @param boolean $isImage
      * @return array
      */
-    protected function getFieldJsonValue($id, $isImage = true) {
+    protected function getFieldJsonValue($id, $isImage = true)
+    {
         $fieldValue = $this->crud->getEntry($id)->field;
 
         $fieldJson = [];
 
         if ($isImage == false) {
 
-            $fieldJson['name'] = "value";
+            $fieldJson['name']  = "value";
             $fieldJson['label'] = "Value";
-            $fieldJson['type'] = $fieldValue;
+            $fieldJson['type']  = $fieldValue;
 
             return $fieldJson;
         } else {
 
-            $fieldJson['name'] = "value";
-            $fieldJson['label'] = "Value";
-            $fieldJson['type'] = $fieldValue;
-            $fieldJson['upload'] = config('backpack.settings.image_upload_enabled');
-            $fieldJson['crop'] = config('backpack.settings.image_crop_enabled');
-            $fieldJson['aspect_ratio'] = config('backpack.settings.image_aspect_ratio');
-            $fieldJson['prefix'] = config('backpack.settings.image_prefix');
+            $fieldJson['name']          = "value";
+            $fieldJson['label']         = "Value";
+            $fieldJson['type']          = $fieldValue;
+            $fieldJson['upload']        = config('backpack.settings.image_upload_enabled');
+            $fieldJson['crop']          = config('backpack.settings.image_crop_enabled');
+            $fieldJson['aspect_ratio']  = config('backpack.settings.image_aspect_ratio');
+            $fieldJson['prefix']        = config('backpack.settings.image_prefix');
             return $fieldJson;
         }
 
     }
     /**
-     * get the correct field type
+     * get the correct field type.
+     *
      * @param int $id
      * @return string
      */
-    protected function getFieldType($id) {
+    protected function getFieldType($id)
+    {
         return $this->crud->getEntry($id)->field;
     }
     /**
-     * get the correct field type
+     * get the correct field type.
+     *
      * @param int $id
-     * @return boolean
+     * @return bool
      */
-    protected function isImageField($id) {
-        return $this->getFieldType($id) == "image" ? true : false;
+    protected function isImageField($id)
+    {
+        return $this->getFieldType($id) == 'image' ? true : false;
     }
 }

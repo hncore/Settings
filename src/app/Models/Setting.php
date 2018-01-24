@@ -11,7 +11,6 @@ use Prologue\Alerts\Facades\Alert;
 
 /**
  * Class Setting
- * @package App\Models
  */
 class Setting extends Model
 {
@@ -22,16 +21,16 @@ class Setting extends Model
 
     /**
      * Model Boot function
-     * Need it to delete image file from disk if the field type == image
+     * Need it to delete image file from disk if the field type == image.
      */
     public static function boot()
     {
         parent::boot();
-        static::deleting(function($obj) {
+        static::deleting(function ($obj) {
             // 1. get field type
             $type = $obj->field;
             // 2. check if it's image
-            if ($type == "image") {
+            if ($type == 'image') {
                 // 3. delete from disk
                 if (!Storage::disk(config('backpack.settings.images_disk_name'))->delete($obj->value)) {
                     // filed to delete image file
@@ -41,20 +40,22 @@ class Setting extends Model
         });
     }
     /**
-     * set field json to database
+     * set field json to database.
+     *
      * @param $field
      */
     public function setFieldAttribute($field)
     {
         $fieldJson = [];
-        $fieldJson['name'] = "value";
+        $fieldJson['name']  = "value";
         $fieldJson['label'] = "Value";
-        $fieldJson['type'] = $field;
+        $fieldJson['type']  = $field;
 
         $this->attributes['field'] = json_encode($fieldJson);
     }
     /**
-     * get the correct type value for select2_from_array
+     * get the correct type value for select2_from_array.
+     *
      * @param $field
      * @return string
      */
@@ -64,7 +65,8 @@ class Setting extends Model
         return $fieldDecoded['type'];
     }
     /**
-     * set the correct value and check if image field
+     * set the correct value and check if image field.
+     *
      * @param $value
      */
     public function setValueAttribute($value)
@@ -79,7 +81,7 @@ class Setting extends Model
         $type = $fieldDecoded['type'];
 
         // column attribute name
-        $attribute_name = "value";
+        $attribute_name = 'value';
         // get images disk
         $disk = config('backpack.settings.images_disk_name');
         // get destination folder
@@ -97,10 +99,9 @@ class Setting extends Model
                 }
 
                 // if a base64 was sent, store it in the db
-                if (starts_with($value, 'data:image'))
-                {
+                if (starts_with($value, 'data:image')) {
                     // 0. Get image extension
-                    preg_match("/^data:image\/(.*);base64/i",$value, $match);
+                    preg_match("/^data:image\/(.*);base64/i", $value, $match);
                     $extension = $match[1];
                     // 1. Make the image
                     $image = Image::make($value);
@@ -129,7 +130,8 @@ class Setting extends Model
     }
     /**
      * get the correct value and check fields types
-     * and return the correct tags
+     * and return the correct tags.
+     *
      * @return mixed
      */
     public function getValueFunction()
@@ -145,13 +147,15 @@ class Setting extends Model
         // get field type
         $type = $fieldDecoded['type'];
         // check value set
-        if (!isset($setting->{$attribute_name})) return false;
+        if (!isset($setting->{$attribute_name})) {
+            return false;
+        }
         // get value
         $value = $setting->{$attribute_name};
 
         switch ($type) {
             case 'text':
-                return str_limit(strip_tags($value), 80, "[...]");
+                return str_limit(strip_tags($value), 80, '[...]');
                 break;
             case 'url':
                 return '<a href="'.$value.'">'.$value.'</a>';
