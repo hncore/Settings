@@ -11,26 +11,28 @@
 An interface for the administrator to easily change application settings. Uses Laravel Backpack. On Laravel 5.2.
 
 > ### Security updates and breaking changes
-> Please **[subscribe to the Backpack Newsletter](http://eepurl.com/bUEGjf)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
+> Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
 ## Install
 
 1) In your terminal:
 
 ``` bash
-$ composer require backpack/settings
+composer require backpack/settings
 ```
 
-2) Add the service provider to your config/app.php file:
+2) For Laravel <5.5 apps, add the service provider to your config/app.php file:
 ```php
 Backpack\Settings\SettingsServiceProvider::class,
 ```
 
 3) Run the migration and add some example settings:
 ```bash
-$ php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
-$ php artisan migrate
-$ php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
+php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
+php artisan migrate
+
+## if you want to have some example entries in the database
+php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
 ```
 
 4) [Optional] Add a menu item for it in resources/views/vendor/backpack/base/inc/sidebar.blade.php or menu.blade.php:
@@ -99,7 +101,7 @@ If you need to modify how this works in a project:
 
 If you discover any security related issues, please email hello@tabacitu.ro instead of using the issue tracker.
 
-Please **[subscribe to the Backpack Newsletter](http://eepurl.com/bUEGjf)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
+Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
 ## Credits
 
@@ -108,7 +110,7 @@ Please **[subscribe to the Backpack Newsletter](http://eepurl.com/bUEGjf)** so y
 
 ## License
 
-Backpack is free for non-commercial use and $19/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
+Backpack is free for non-commercial use and 39 EUR/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/backpack/settings.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square

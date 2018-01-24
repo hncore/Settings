@@ -32,6 +32,9 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // define the routes for the application
+        $this->setupRoutes($this->app->router);
+
         // only use the Settings package if the Settings table is present in the database
         if (!\App::runningInConsole() && count(Schema::getColumnListing('settings'))) {
             // get all settings from the database
@@ -45,7 +48,6 @@ class SettingsServiceProvider extends ServiceProvider
         }
         // publish the migrations and seeds
         $this->publishes([__DIR__.'/database/migrations/' => database_path('migrations')], 'migrations');
-        $this->publishes([__DIR__.'/database/seeds/' => database_path('seeds')], 'seeds');
 
         // publish translation files
         $this->publishes([__DIR__.'/resources/lang' => resource_path('lang/vendor/backpack')], 'lang');
@@ -79,8 +81,6 @@ class SettingsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerSettings();
-
-        $this->setupRoutes($this->app->router);
     }
 
     private function registerSettings()
