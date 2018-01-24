@@ -9,35 +9,68 @@ use Backpack\Settings\app\Http\Requests\SettingRequest as UpdateRequest;
 
 class SettingCrudController extends CrudController
 {
-    public function __construct()
+    public function setup()
     {
-        parent::__construct();
-
         $this->crud->setModel("Backpack\Settings\app\Models\Setting");
         $this->crud->setEntityNameStrings(trans('backpack::settings.setting_singular'), trans('backpack::settings.setting_plural'));
         $this->crud->setRoute(config('backpack.base.route_prefix', 'admin').'/setting');
-        $this->crud->denyAccess(['create', 'delete']);
         $this->crud->setColumns([
             [
                 'name'  => 'name',
                 'label' => trans('backpack::settings.name'),
             ],
             [
+                'name'  => 'key',
+                'label' => trans('backpack::settings.key'),
+            ],
+            [
                 'name'  => 'value',
                 'label' => trans('backpack::settings.value'),
+                'type' => 'model_function',
+                'function_name' => 'getValueFunction',
             ],
             [
                 'name'  => 'description',
                 'label' => trans('backpack::settings.description'),
             ],
         ]);
-        $this->crud->addField([
-            'name'       => 'name',
-            'label'      => trans('backpack::settings.name'),
-            'type'       => 'text',
-            'attributes' => [
-                'disabled' => 'disabled',
+        $this->crud->addFields([
+            [
+                'name'       => 'name',
+                'label'      => trans('backpack::settings.name'),
+                'type'       => 'text',
             ],
+            [
+                'name'  => 'key',
+                'label' => trans('backpack::settings.key'),
+                'type' => 'text'
+            ],
+            [
+                'name'  => 'description',
+                'label' => trans('backpack::settings.description'),
+                'type' => 'text'
+            ],
+            [ // select_from_array
+                'name' => 'field',
+                'label' => trans('backpack::settings.select_field'),
+                'type' => 'select2_from_array',
+                'options' => [
+                    'text' => 'Text',
+                    'email' => 'Email',
+                    'checkbox' => 'Checkbox',
+                    'number' => 'Number',
+                    'url' => 'URL',
+                    'image' => 'Image',
+                    'password' => 'Password',
+                    'icon_picker' => 'Icon Picker',
+                ],
+                'allows_null' => false,
+            ],
+            [
+                'name'  => 'active',
+                'label' => trans('backpack::settings.active'),
+                'type' => 'checkbox'
+            ]
         ]);
     }
 
@@ -55,6 +88,13 @@ class SettingCrudController extends CrudController
         return parent::index();
     }
 
+    /**
+     * Store a newly created resource in the database.
+     *
+     * @param StoreRequest $request - type injection used for validation using Requests
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreRequest $request)
     {
         return parent::storeCrud();
@@ -72,7 +112,7 @@ class SettingCrudController extends CrudController
         $this->crud->hasAccessOrFail('update');
 
         $this->data['entry'] = $this->crud->getEntry($id);
-        $this->crud->addField((array) json_decode($this->data['entry']->field)); // <---- this is where it's different
+        $this->crud->addField((array) json_decode($this->getFieldJsonValue(), true)); // <---- this is where it's different
         $this->data['crud'] = $this->crud;
         $this->data['saveAction'] = $this->getSaveAction();
         $this->data['fields'] = $this->crud->getUpdateFields($id);
@@ -84,8 +124,24 @@ class SettingCrudController extends CrudController
         return view($this->crud->getEditView(), $this->data);
     }
 
+    /**
+     * Update the specified resource in the database.
+     *
+     * @param UpdateRequest $request - type injection used for validation using Requests
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateRequest $request)
     {
         return parent::updateCrud();
+    }
+
+    /**
+     * get the correct field json value to add the correct field to edit form
+     * @return string
+     */
+    protected function getFieldJsonValue() {
+        $fieldValue = $this->data['entry']->field;
+        return "{\"name\":\"value\",\"label\":\"Value\",\"type\":\"$fieldValue\"}";
     }
 }

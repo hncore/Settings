@@ -51,6 +51,14 @@ class SettingsServiceProvider extends ServiceProvider
 
         // publish translation files
         $this->publishes([__DIR__.'/resources/lang' => resource_path('lang/vendor/backpack')], 'lang');
+
+        // use the vendor configuration file as fallback
+        $this->mergeConfigFrom(
+            __DIR__.'/config/backpack/settings.php',
+            'backpack.settings'
+        );
+        // publish config file
+        $this->publishes([__DIR__.'/config' => config_path()], 'config');
     }
 
     /**
