@@ -11,7 +11,7 @@ class SettingCrudController extends CrudController
 {
     public function setup()
     {
-        $this->crud->setModel("Backpack\Settings\app\Models\Setting");
+        $this->crud->setModel("\App\Models\Setting");
         $this->crud->setEntityNameStrings(trans('backpack::settings.setting_singular'), trans('backpack::settings.setting_plural'));
         $this->crud->setRoute(config('backpack.base.route_prefix', 'admin').'/setting');
         $this->crud->setColumns([
@@ -112,7 +112,7 @@ class SettingCrudController extends CrudController
         $this->crud->hasAccessOrFail('update');
 
         $this->data['entry'] = $this->crud->getEntry($id);
-        $this->crud->addField((array) json_decode($this->getFieldJsonValue(), true)); // <---- this is where it's different
+        $this->crud->addField((array) $this->getFieldJsonValue($id, $this->isImageField($id))); // <---- this is where it's different
         $this->data['crud'] = $this->crud;
         $this->data['saveAction'] = $this->getSaveAction();
         $this->data['fields'] = $this->crud->getUpdateFields($id);
@@ -138,10 +138,49 @@ class SettingCrudController extends CrudController
 
     /**
      * get the correct field json value to add the correct field to edit form
+     * @param int $id
+     * @param boolean $isImage
+     * @return array
+     */
+    protected function getFieldJsonValue($id, $isImage = true) {
+        $fieldValue = $this->crud->getEntry($id)->field;
+
+        $fieldJson = [];
+
+        if ($isImage == false) {
+
+            $fieldJson['name'] = "value";
+            $fieldJson['label'] = "Value";
+            $fieldJson['type'] = $fieldValue;
+
+            return $fieldJson;
+        } else {
+
+            $fieldJson['name'] = "value";
+            $fieldJson['label'] = "Value";
+            $fieldJson['type'] = $fieldValue;
+            $fieldJson['upload'] = config('backpack.settings.image_upload_enabled');
+            $fieldJson['crop'] = config('backpack.settings.image_crop_enabled');
+            $fieldJson['aspect_ratio'] = config('backpack.settings.image_aspect_ratio');
+            $fieldJson['prefix'] = config('backpack.settings.image_prefix');
+            return $fieldJson;
+        }
+
+    }
+    /**
+     * get the correct field type
+     * @param int $id
      * @return string
      */
-    protected function getFieldJsonValue() {
-        $fieldValue = $this->data['entry']->field;
-        return "{\"name\":\"value\",\"label\":\"Value\",\"type\":\"$fieldValue\"}";
+    protected function getFieldType($id) {
+        return $this->crud->getEntry($id)->field;
+    }
+    /**
+     * get the correct field type
+     * @param int $id
+     * @return boolean
+     */
+    protected function isImageField($id) {
+        return $this->getFieldType($id) == "image" ? true : false;
     }
 }

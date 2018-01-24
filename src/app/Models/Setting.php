@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Prologue\Alerts\Facades\Alert;
 
+/**
+ * Class Setting
+ * @package App\Models
+ */
 class Setting extends Model
 {
     use CrudTrait;
@@ -44,8 +48,12 @@ class Setting extends Model
      */
     public function setFieldAttribute($field)
     {
-        $filedJson = "{\"name\":\"value\",\"label\":\"Value\",\"type\":\"$field\"}";
-        $this->attributes['field'] = $filedJson;
+        $fieldJson = [];
+        $fieldJson['name'] = "value";
+        $fieldJson['label'] = "Value";
+        $fieldJson['type'] = $field;
+
+        $this->attributes['field'] = json_encode($fieldJson);
     }
     /**
      * get the correct type value for select2_from_array
@@ -164,7 +172,7 @@ class Setting extends Model
                 return $html;
                 break;
             case 'image':
-                return '<a href="'.url('/uploads/'.$value).'"><img class="img-circle" width="70px" height="70px" src="'.url('/uploads/'.$value).'" alt="User Avatar"></a>';
+                return '<a href="'.url(config('backpack.settings.image_prefix').$value).'"><img class="img-circle" width="70px" height="70px" src="'.url('/uploads/'.$value).'" alt="User Avatar"></a>';
                 break;
             case 'password':
                 return '<a class="btn btn-default"><i class="fa fa-key"></i></a>';
