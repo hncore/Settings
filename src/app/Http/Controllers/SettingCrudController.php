@@ -38,14 +38,7 @@ class SettingCrudController extends CrudController
         });
 
         CRUD::operation('update', function () {
-            CRUD::addField([
-                'name'       => 'name',
-                'label'      => trans('backpack::settings.name'),
-                'type'       => 'text',
-                'attributes' => [
-                    'disabled' => 'disabled',
-                ],
-            ]);
+            CRUD::addField('value');
         });
     }
 
