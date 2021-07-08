@@ -2,6 +2,7 @@
 
 namespace Backpack\Settings;
 
+use Backpack\Settings\app\Console\Commands\SettingsSync;
 use Backpack\Settings\app\Models\Setting as Setting;
 use Config;
 use Illuminate\Routing\Router;
@@ -51,6 +52,14 @@ class SettingsServiceProvider extends ServiceProvider
 
         // publish translation files
         $this->publishes([__DIR__.'/resources/lang' => resource_path('lang/vendor/backpack')], 'lang');
+
+        // publish config/settings.php
+        $this->publishes([__DIR__.'/config/settings.php' => config_path('settings.php')], 'settings.php');
+
+        // register commands
+         $this->commands([ 
+           SettingsSync::class
+        ]);
     }
 
     /**

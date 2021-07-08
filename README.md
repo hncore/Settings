@@ -25,11 +25,14 @@ composer require backpack/settings
 php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
 php artisan migrate
 
+# change config/settings.php dummy settings
+
+# sync your settings to database
+php artisan settings:sync
+
 # [optional] add a menu item for it to the sidebar_content file
 php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
 
-# [optional] insert some example dummy data to the database
-php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
 ```
 
 ## Usage
@@ -46,20 +49,17 @@ Setting::get('contact_email')
 Config::get('settings.contact_email')
 ```
 
-### Add new settings
+### Change settings
 
-Settings are stored in the database in the "settings" table. Its columns are:
-- id (ex: 1)
-- key (ex: contact_email)
-- name (ex: Contact form email address)
-- description (ex: The email address that all emails go to.)
-- value (ex: admin@laravelbackpack.com)
-- field (Backpack CRUD field configuration in JSON format. https://backpackforlaravel.com/docs/crud-fields#default-field-types)
-- active (1 or 0)
-- created_at
-- updated_at
+Available settings are stored in `config/settings.php`
 
-There is no interface available to add new settings. They are added by the developer directly in the database, since the Backpack CRUD field configuration is a bit complicated. See the field types and their configuration code on https://backpackforlaravel.com/docs
+To syncronize with database simply run: 
+
+```
+php artisan settings:sync
+```
+
+Note: this command doesn't overwrite 'value' column in database
 
 ### Override existing configurations
 
