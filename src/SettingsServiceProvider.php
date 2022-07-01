@@ -5,6 +5,7 @@ namespace Backpack\Settings;
 use Backpack\Settings\app\Models\Setting;
 use Config;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Route;
@@ -41,10 +42,21 @@ class SettingsServiceProvider extends ServiceProvider
         // define the routes for the application
         $this->setupRoutes($this->app->router);
 
+        // listen for settings to be saved and clear the cache when any Setting model is saved.
+        Setting::saved(function () {
+            Cache::forget('backpack_settings_cache');
+        });
+
         // only use the Settings package if the Settings table is present in the database
-        if (!\App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
-            // get all settings from the database
-            $settings = Setting::all();
+        $tableExists = Cache::remember('backpack_settings_table_exists', config('backpack.settings.cache_time', 60), function () {
+            return Schema::hasTable(config('backpack.settings.table_name'));
+        });
+
+        if (!\App::runningInConsole() && $tableExists) {
+            // get all settings from the database if they're not in the database.
+            $settings = Cache::rememberForever('backpack_settings_cache', config('backpack.settings.cache_time', 60), function () {
+                return Setting::all();
+            });
 
             $config_prefix = config('backpack.settings.config_prefix');
 
