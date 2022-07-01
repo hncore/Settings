@@ -8,12 +8,14 @@
 [![Style CI](https://styleci.io/repos/53683729/shield)](https://styleci.io/repos/53683729)
 [![Total Downloads][ico-downloads]][link-downloads]
 
-An interface for the administrator to easily change application settings. Uses Laravel Backpack. Works on Laravel 5.2 to Laravel 6.
+An interface for the administrator to easily change application settings. Uses Laravel Backpack. Works on Laravel 5.2 to Laravel 8.
 
 > ### Security updates and breaking changes
 > Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
-## Install
+## Install 
+
+**Note:** The default table name is `settings`, if you need to change it please carefully read the comments in the instruction below.
 
 In your terminal:
 
@@ -21,12 +23,16 @@ In your terminal:
 # install the package
 composer require backpack/settings
 
-# run the migration
+# [optional] if you need to change table name or migration name, please do it now before proceding
+php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider" --tag="config"
+# then change the values you need in in `config/backpack/settings.php`
+
+# publish & run the migration
 php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
 php artisan migrate
 
 # [optional] add a menu item for it to the sidebar_content file
-php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon fa fa-cog'></i> <span>Settings</span></a></li>"
+php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
 
 # [optional] insert some example dummy data to the database
 php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
@@ -54,12 +60,12 @@ Settings are stored in the database in the "settings" table. Its columns are:
 - name (ex: Contact form email address)
 - description (ex: The email address that all emails go to.)
 - value (ex: admin@laravelbackpack.com)
-- field (Backpack CRUD field configuration in JSON format. https://laravel-backpack.readme.io/docs/crud-fields#standard-field-types)
+- field (Backpack CRUD field configuration in JSON format. https://backpackforlaravel.com/docs/crud-fields#default-field-types)
 - active (1 or 0)
 - created_at
 - updated_at
 
-There is no interface available to add new settings. They are added by the developer directly in the database, since the Backpack CRUD field configuration is a bit complicated. See the field types and their configuration code on https://laravel-backpack.readme.io/docs
+There is no interface available to add new settings. They are added by the developer directly in the database, since the Backpack CRUD field configuration is a bit complicated. See the field types and their configuration code on https://backpackforlaravel.com/docs
 
 ### Override existing configurations
 
@@ -135,10 +141,10 @@ For example, you can override the Backpack `show_powered_by` or the `skin` setti
 
 ## Screenshots
 
-See http://laravelbackpack.com
+See [backpackforlaravel.com](https://backpackforlaravel.com)
 
 - List view:
-![List / table view in Backpack/Settings](https://backpackforlaravel.com/uploads/screenshots/settings_list.png)
+![List / table view in Backpack/Settings](https://user-images.githubusercontent.com/1032474/111115626-8f7a0480-856d-11eb-99bb-3004ec621ebb.gif)
 - Editing a setting with the email field type:
 
 ## Change log
@@ -164,7 +170,7 @@ If you need to modify how this works in a project:
 
 ## Security
 
-If you discover any security related issues, please email hello@tabacitu.ro instead of using the issue tracker.
+If you discover any security related issues, please email tabacitu@backpackforlaravel.com instead of using the issue tracker.
 
 Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
@@ -175,7 +181,7 @@ Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/ne
 
 ## License
 
-Backpack is free for non-commercial use and 49 EUR/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
+Backpack is free for non-commercial use and 69 EUR/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/pricing) for more information.
 
 ## Hire us
 
@@ -185,7 +191,7 @@ If you are looking for a developer/team to help you build an admin panel on Lara
 
 
 [ico-version]: https://img.shields.io/packagist/v/backpack/settings.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-dual-blue?style=flat-square
 [ico-travis]: https://img.shields.io/travis/laravel-backpack/settings/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/laravel-backpack/settings.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/laravel-backpack/settings.svg?style=flat-square

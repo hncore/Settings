@@ -4,6 +4,48 @@ All Notable changes to `Backpack Settings` will be documented in this file
 
 -----
 
+## [3.0.7] - 2020-04-24
+
+### Added
+- support for Backpack 4.1;
+
+
+## [3.0.6] - 2020-04-13
+
+### Added
+- Serbian localization;
+
+
+## [3.0.5] - 2020-03-05
+
+### Fixed
+- dropped PHPUnit 4 support;
+
+
+## [3.0.4] - 2020-03-05
+
+### Fixed
+- upgraded PHPUnit to 9/7/4;
+
+
+## [3.0.3] - 2020-02-16
+
+### Added
+- PHP 7.2, 7.3, 7.4 and 8.0 to TravisCI;
+
+
+## [3.0.2] - 2020-01-14
+
+### Added
+- Indonesian language;
+
+
+## [3.0.1] - 2019-12-19
+
+### Added
+- Farsi (Persian) language file;
+
+
 ## [3.0.0] - 2019-09-24
 
 ### Added
