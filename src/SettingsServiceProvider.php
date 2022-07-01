@@ -48,13 +48,13 @@ class SettingsServiceProvider extends ServiceProvider
         });
 
         // only use the Settings package if the Settings table is present in the database
-        $tableExists = Cache::remember('backpack_settings_table_exists', function () {
+        $tableExists = Cache::remember('backpack_settings_table_exists', config('backpack.settings.cache_time', 60), function () {
             return Schema::hasTable(config('backpack.settings.table_name'));
         });
 
         if (!\App::runningInConsole() && $tableExists) {
             // get all settings from the database if they're not in the database.
-            $settings = Cache::rememberForever('backpack_settings_cache', function () {
+            $settings = Cache::remember('backpack_settings_cache', config('backpack.settings.cache_time', 60), function () {
                 return Setting::all();
             });
 
