@@ -5,8 +5,8 @@ namespace Backpack\Settings;
 use Backpack\Settings\app\Models\Setting as Setting;
 use Config;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Route;
 
