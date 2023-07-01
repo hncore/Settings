@@ -7,7 +7,6 @@ use Config;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Route;
 
 class SettingsServiceProvider extends ServiceProvider
 {
