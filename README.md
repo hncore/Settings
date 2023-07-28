@@ -31,7 +31,7 @@ php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider
 php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
 php artisan migrate
 
-# [optional] add a menu item for it to the sidebar_content file
+# [optional] add a menu item for it
 # For Backpack v6
 php artisan backpack:add-menu-content "<x-backpack::menu-item title='Settings' icon='la la-cog' :link=\"backpack_url('setting')\" />"
 # For Backpack v5 or v4
