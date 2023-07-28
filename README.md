@@ -13,7 +13,7 @@ An interface for the administrator to easily change application settings. Uses L
 > ### Security updates and breaking changes
 > Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
-## Install 
+## Install
 
 **Note:** The default table name is `settings`, if you need to change it please carefully read the comments in the instruction below.
 
@@ -32,6 +32,9 @@ php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider
 php artisan migrate
 
 # [optional] add a menu item for it to the sidebar_content file
+# For Backpack v6
+php artisan backpack:add-menu-content "<x-backpack::menu-item title='Settings' icon='la la-cog' :link=\"backpack_url('setting')\" />"
+# For Backpack v5 or v4
 php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
 
 # [optional] insert some example dummy data to the database
@@ -48,7 +51,7 @@ Use it like you would any config value in a virtual settings.php file. Except th
 
 ``` php
 Setting::get('contact_email')
-// or 
+// or
 Config::get('settings.contact_email')
 ```
 
@@ -100,11 +103,11 @@ For example, you can override the Backpack `show_powered_by` or the `skin` setti
 
    ```diff
    <?php
-   
+
    namespace App\Providers;
-   
+
    use Illuminate\Support\ServiceProvider;
-   
+
    class AppServiceProvider extends ServiceProvider
    {
        /**
@@ -116,7 +119,7 @@ For example, you can override the Backpack `show_powered_by` or the `skin` setti
        {
    +       $this->overrideConfigValues();
        }
-   
+
        /**
         * Register any application services.
         *
@@ -126,7 +129,7 @@ For example, you can override the Backpack `show_powered_by` or the `skin` setti
        {
            //
        }
-   
+
    +   protected function overrideConfigValues()
    +   {
    +       $config = [];
@@ -163,8 +166,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Overwriting Functionality
 
-If you need to modify how this works in a project: 
-- create a ```routes/backpack/settings.php``` file; the package will see that, and load _your_ routes file, instead of the one in the package; 
+If you need to modify how this works in a project:
+- create a ```routes/backpack/settings.php``` file; the package will see that, and load _your_ routes file, instead of the one in the package;
 - create controllers/models that extend the ones in the package, and use those in your new routes file;
 - modify anything you'd like in the new controllers/models;
 
