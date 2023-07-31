@@ -35,7 +35,6 @@ php artisan migrate
 # For Backpack v6
 php artisan backpack:add-menu-content "<x-backpack::menu-item title='Settings' icon='la la-cog' :link=\"backpack_url('setting')\" />"
 # For Backpack v5 or v4
-php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
 
 # [optional] insert some example dummy data to the database
 php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
