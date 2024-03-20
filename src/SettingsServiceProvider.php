@@ -2,7 +2,6 @@
 
 namespace Backpack\Settings;
 
-use Backpack\Settings\app\Models\Setting;
 use Config;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Schema;
@@ -42,8 +41,11 @@ class SettingsServiceProvider extends ServiceProvider
 
         // only use the Settings package if the Settings table is present in the database
         if (!\App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
+            //get the model class from configuration
+            $modelClass = \Config::get('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class);
+
             // get all settings from the database
-            $settings = Setting::all();
+            $settings = $modelClass::all();
 
             $config_prefix = config('backpack.settings.config_prefix');
 
