@@ -42,7 +42,7 @@ return [
     |
     | WARNING: WE ADVISE TO NOT LEAVE THIS EMPTY / CHECK IF IT DOES NOT CONFLICT WITH OTHER CONFIG FILE NAMES
     |
-    |   - if you leave this empty and your keys match other configuration files you might ovetwrite them.
+    |   - if you leave this empty and your keys match other configuration files you might overwrite them.
     |
     */
     'config_prefix' => 'settings',
