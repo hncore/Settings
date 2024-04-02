@@ -2,8 +2,7 @@
 
 namespace Backpack\Settings;
 
-use Config;
-use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,12 +36,12 @@ class SettingsServiceProvider extends ServiceProvider
         );
 
         // define the routes for the application
-        $this->setupRoutes($this->app->router);
+        $this->setupRoutes();
 
         // only use the Settings package if the Settings table is present in the database
-        if (!\App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
-            //get the model class from the configuration
-            $modelClass = \Config::get('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class);
+        if (! App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
+            /** @var \Illuminate\Database\Eloquent\Model $modelClass */
+            $modelClass = config('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class);
 
             // get all settings from the database
             $settings = $modelClass::all();
@@ -52,8 +51,8 @@ class SettingsServiceProvider extends ServiceProvider
             // bind all settings to the Laravel config, so you can call them like
             // Config::get('settings.contact_email')
             foreach ($settings as $key => $setting) {
-                $prefixed_key = !empty($config_prefix) ? $config_prefix.'.'.$setting->key : $setting->key;
-                Config::set($prefixed_key, $setting->value);
+                $prefixed_key = ! empty($config_prefix) ? $config_prefix.'.'.$setting->key : $setting->key;
+                config([$prefixed_key => $setting->value]);
             }
         }
         // publish the migrations and seeds
@@ -71,11 +70,9 @@ class SettingsServiceProvider extends ServiceProvider
     /**
      * Define the routes for the application.
      *
-     * @param \Illuminate\Routing\Router $router
-     *
      * @return void
      */
-    public function setupRoutes(Router $router)
+    public function setupRoutes()
     {
         // by default, use the routes file provided in the vendor
         $routeFilePathInUse = __DIR__.$this->routeFilePath;
@@ -97,6 +94,6 @@ class SettingsServiceProvider extends ServiceProvider
     {
         // register their aliases
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('Setting', config('backpack.settings.model',\Backpack\Settings\app\Models\Setting::class));
+        $loader->alias('Setting', config('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class));
     }
 }
