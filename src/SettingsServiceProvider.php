@@ -39,7 +39,7 @@ class SettingsServiceProvider extends ServiceProvider
         $this->setupRoutes();
 
         // only use the Settings package if the Settings table is present in the database
-        if (! App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
+        if (!App::runningInConsole() && Schema::hasTable(config('backpack.settings.table_name'))) {
             /** @var \Illuminate\Database\Eloquent\Model $modelClass */
             $modelClass = config('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class);
 
@@ -51,7 +51,7 @@ class SettingsServiceProvider extends ServiceProvider
             // bind all settings to the Laravel config, so you can call them like
             // Config::get('settings.contact_email')
             foreach ($settings as $key => $setting) {
-                $prefixed_key = ! empty($config_prefix) ? $config_prefix.'.'.$setting->key : $setting->key;
+                $prefixed_key = !empty($config_prefix) ? $config_prefix.'.'.$setting->key : $setting->key;
                 config([$prefixed_key => $setting->value]);
             }
         }
