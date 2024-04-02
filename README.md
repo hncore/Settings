@@ -63,7 +63,7 @@ Settings are stored in the database in the "settings" table. Its columns are:
 - name (ex: Contact form email address)
 - description (ex: The email address that all emails go to.)
 - value (ex: admin@laravelbackpack.com)
-- field (Backpack CRUD field configuration in JSON format. https://backpackforlaravel.com/docs/crud-fields#default-field-types)
+- field (Backpack CRUD field configuration in JSON format. The "name" of the field is **mandatory** to be "value") - see the field types and their configuration code on https://backpackforlaravel.com/docs/crud-fields#default-field-types
 - active (1 or 0)
 - created_at
 - updated_at
@@ -88,6 +88,8 @@ For example, you can override the Backpack `show_powered_by` setting in `/config
    | field | {"name":"value","label":"Value","type":"checkbox"} |
    | active | 1 |
    
+**NOTE**: The `field` column should be a JSON string. The `name` key in the JSON string should be `value`. Using any other key will not work.
+
 3. Open up the `app/Providers/AppServiceProvider` file, and add the below lines:
 
    ```diff
