@@ -11,7 +11,7 @@
 An interface for the administrator to easily change application settings. Uses Laravel Backpack. Works on Backpack v4, v5 and v6.
 
 > ### Security updates and breaking changes
-> Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
+> Please **[subscribe to the Backpack Newsletter](http://hncoreforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
 ## Install
 
@@ -21,11 +21,11 @@ In your terminal:
 
 ``` bash
 # install the package
-composer require backpack/settings
+composer require hncore/settings
 
 # [optional] if you need to change table name or migration name, please do it now before proceding
 php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider" --tag="config"
-# then change the values you need in in `config/backpack/settings.php`
+# then change the values you need in in `config/hncore/settings.php`
 
 # publish & run the migration
 php artisan vendor:publish --provider="Backpack\Settings\SettingsServiceProvider"
@@ -33,9 +33,9 @@ php artisan migrate
 
 # [optional] add a menu item for it
 # For Backpack v6
-php artisan backpack:add-menu-content "<x-backpack::menu-item title='Settings' icon='la la-cog' :link=\"backpack_url('setting')\" />"
+php artisan hncore:add-menu-content "<x-hncore::menu-item title='Settings' icon='la la-cog' :link=\"hncore_url('setting')\" />"
 # For Backpack v5 or v4
-php artisan backpack:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ backpack_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
+php artisan hncore:add-sidebar-content "<li class='nav-item'><a class='nav-link' href='{{ hncore_url('setting') }}'><i class='nav-icon la la-cog'></i> <span>Settings</span></a></li>"
 
 # [optional] insert some example dummy data to the database
 php artisan db:seed --class="Backpack\Settings\database\seeds\SettingsTableSeeder"
@@ -62,18 +62,18 @@ Settings are stored in the database in the "settings" table. Its columns are:
 - key (ex: contact_email)
 - name (ex: Contact form email address)
 - description (ex: The email address that all emails go to.)
-- value (ex: admin@laravelbackpack.com)
-- field (Backpack CRUD field configuration in JSON format. The "name" of the field is **mandatory** to be "value") - see the field types and their configuration code on https://backpackforlaravel.com/docs/crud-fields#default-field-types
+- value (ex: admin@laravelhncore.com)
+- field (Backpack CRUD field configuration in JSON format. The "name" of the field is **mandatory** to be "value") - see the field types and their configuration code on https://hncoreforlaravel.com/docs/crud-fields#default-field-types
 - active (1 or 0)
 - created_at
 - updated_at
 
-There is no interface available to add new settings. They are added by the developer directly in the database, since the Backpack CRUD field configuration is a bit complicated. See the field types and their configuration code on https://backpackforlaravel.com/docs
+There is no interface available to add new settings. They are added by the developer directly in the database, since the Backpack CRUD field configuration is a bit complicated. See the field types and their configuration code on https://hncoreforlaravel.com/docs
 
 ### Override existing configurations
 
 You can use this addon to make various Laravel configurations adjustable through the settings GUI, including Backpack settings themself.
-For example, you can override the Backpack `show_powered_by` setting in `/config/backpack/ui.php`.
+For example, you can override the Backpack `show_powered_by` setting in `/config/hncore/ui.php`.
 
 1. Create the setting entry in your settings database. You can add the settings manually, or via [Laravel seeders](https://laravel.com/docs/seeding). The values inserted into the database should be look similar to below:
 
@@ -125,7 +125,7 @@ For example, you can override the Backpack `show_powered_by` setting in `/config
    +   {
    +       $config = [];
    +       if (config('settings.show_powered_by')) {
-   +           $config['backpack.ui.show_powered_by'] = config('settings.show_powered_by') == '1';
+   +           $config['hncore.ui.show_powered_by'] = config('settings.show_powered_by') == '1';
    +       }
    +       config($config);
    +   }
@@ -134,7 +134,7 @@ For example, you can override the Backpack `show_powered_by` setting in `/config
 
 ## Screenshots
 
-See [backpackforlaravel.com](https://backpackforlaravel.com)
+See [hncoreforlaravel.com](https://hncoreforlaravel.com)
 
 - List view:
 ![List / table view in Backpack/Settings](https://user-images.githubusercontent.com/1032474/111115626-8f7a0480-856d-11eb-99bb-3004ec621ebb.gif)
@@ -157,15 +157,15 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ## Overwriting Functionality
 
 If you need to modify how this works in a project:
-- create a ```routes/backpack/settings.php``` file; the package will see that, and load _your_ routes file, instead of the one in the package;
+- create a ```routes/hncore/settings.php``` file; the package will see that, and load _your_ routes file, instead of the one in the package;
 - create controllers/models that extend the ones in the package, and use those in your new routes file;
 - modify anything you'd like in the new controllers/models;
 
 ## Security
 
-If you discover any security related issues, please email tabacitu@backpackforlaravel.com instead of using the issue tracker.
+If you discover any security related issues, please email tabacitu@hncoreforlaravel.com instead of using the issue tracker.
 
-Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
+Please **[subscribe to the Backpack Newsletter](http://hncoreforlaravel.com/newsletter)** so you can find out about any security updates, breaking changes or major features. We send an email every 1-2 months.
 
 ## Credits
 
@@ -174,26 +174,26 @@ Please **[subscribe to the Backpack Newsletter](http://backpackforlaravel.com/ne
 
 ## License
 
-Backpack is free for non-commercial use and 69 EUR/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/pricing) for more information.
+Backpack is free for non-commercial use and 69 EUR/project for commercial use. Please see [License File](LICENSE.md) and [hncoreforlaravel.com](https://hncoreforlaravel.com/pricing) for more information.
 
 ## Hire us
 
 We've spend more than 50.000 hours creating, polishing and maintaining administration panels on Laravel. We've developed e-Commerce, e-Learning, ERPs, social networks, payment gateways and much more. We've worked on admin panels _so much_, that we've created one of the most popular software in its niche - just from making public what was repetitive in our projects.
 
-If you are looking for a developer/team to help you build an admin panel on Laravel, look no further. You'll have a difficult time finding someone with more experience & enthusiasm for this. This is _what we do_. [Contact us](https://backpackforlaravel.com/need-freelancer-or-development-team). Let's see if we can work together.
+If you are looking for a developer/team to help you build an admin panel on Laravel, look no further. You'll have a difficult time finding someone with more experience & enthusiasm for this. This is _what we do_. [Contact us](https://hncoreforlaravel.com/need-freelancer-or-development-team). Let's see if we can work together.
 
 
-[ico-version]: https://img.shields.io/packagist/v/backpack/settings.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/hncore/settings.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-dual-blue?style=flat-square
-[ico-travis]: https://img.shields.io/travis/laravel-backpack/settings/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/laravel-backpack/settings.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/laravel-backpack/settings.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/backpack/settings.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/laravel-hncore/settings/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/laravel-hncore/settings.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/laravel-hncore/settings.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/hncore/settings.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/backpack/settings
-[link-travis]: https://travis-ci.org/laravel-backpack/settings
-[link-scrutinizer]: https://scrutinizer-ci.com/g/laravel-backpack/settings/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/laravel-backpack/settings
-[link-downloads]: https://packagist.org/packages/backpack/settings
+[link-packagist]: https://packagist.org/packages/hncore/settings
+[link-travis]: https://travis-ci.org/laravel-hncore/settings
+[link-scrutinizer]: https://scrutinizer-ci.com/g/laravel-hncore/settings/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/laravel-hncore/settings
+[link-downloads]: https://packagist.org/packages/hncore/settings
 [link-author]: http://tabacitu.ro
 [link-contributors]: ../../contributors

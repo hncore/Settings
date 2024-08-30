@@ -12,9 +12,9 @@ class SettingCrudController extends CrudController
 
     public function setup()
     {
-        CRUD::setModel(config('backpack.settings.model', \Backpack\Settings\app\Models\Setting::class));
-        CRUD::setEntityNameStrings(trans('backpack::settings.setting_singular'), trans('backpack::settings.setting_plural'));
-        CRUD::setRoute(backpack_url(config('backpack.settings.route')));
+        CRUD::setModel(config('hncore.settings.model', \Backpack\Settings\app\Models\Setting::class));
+        CRUD::setEntityNameStrings(trans('hncore::settings.setting_singular'), trans('hncore::settings.setting_plural'));
+        CRUD::setRoute(hncore_url(config('hncore.settings.route')));
     }
 
     public function setupListOperation()
@@ -26,15 +26,15 @@ class SettingCrudController extends CrudController
         CRUD::setColumns([
             [
                 'name'  => 'name',
-                'label' => trans('backpack::settings.name'),
+                'label' => trans('hncore::settings.name'),
             ],
             [
                 'name'  => 'value',
-                'label' => trans('backpack::settings.value'),
+                'label' => trans('hncore::settings.value'),
             ],
             [
                 'name'  => 'description',
-                'label' => trans('backpack::settings.description'),
+                'label' => trans('hncore::settings.description'),
             ],
         ]);
     }
@@ -43,7 +43,7 @@ class SettingCrudController extends CrudController
     {
         CRUD::addField([
             'name'       => 'name',
-            'label'      => trans('backpack::settings.name'),
+            'label'      => trans('hncore::settings.name'),
             'type'       => 'text',
             'attributes' => [
                 'disabled' => 'disabled',

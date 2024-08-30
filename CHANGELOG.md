@@ -76,7 +76,7 @@ All Notable changes to `Backpack Settings` will be documented in this file
 
 ## Added
 - Backpack\CRUD 3.4 constraint;
-- backpack_middleware() usage;
+- hncore_middleware() usage;
 
 ## Removed
 - Backpack\CRUD 3.2 and 3.3 support;

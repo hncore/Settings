@@ -12,8 +12,8 @@
 
 Route::group([
     'namespace'  => 'Backpack\Settings\app\Http\Controllers',
-    'prefix'     => config('backpack.base.route_prefix', 'admin'),
-    'middleware' => ['web', backpack_middleware()],
+    'prefix'     => config('hncore.base.route_prefix', 'admin'),
+    'middleware' => ['web', hncore_middleware()],
 ], function () {
-    Route::crud(config('backpack.settings.route'), 'SettingCrudController');
+    Route::crud(config('hncore.settings.route'), 'SettingCrudController');
 });

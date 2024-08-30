@@ -16,7 +16,7 @@ class Setting extends Model
     {
         parent::__construct($attributes);
 
-        $this->table = config('backpack.settings.table_name');
+        $this->table = config('hncore.settings.table_name');
     }
 
     /**
@@ -46,7 +46,7 @@ class Setting extends Model
      */
     public static function set($key, $value = null)
     {
-        $database_prefix = config('backpack.settings.database_prefix');
+        $database_prefix = config('hncore.settings.database_prefix');
 
         $prefixed_key = !empty($database_prefix) ? $database_prefix.'.'.$key : $key;
         $setting = new self();
